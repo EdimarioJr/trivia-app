@@ -1,0 +1,16 @@
+@import "../../styles/Quiz.module.scss";
+
+.alternative-answer-correct {
+  background-color: $success;
+  color: $primary;
+}
+
+.alternative-answer-wrong {
+  background-color: $danger;
+  color: $secondary;
+}
+
+.alternative-correct {
+  background-color: skyblue;
+  color: $primary;
+}

@@ -1,0 +1,8 @@
+@import "./variables.scss";
+
+.page-container {
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 5rem;
+}

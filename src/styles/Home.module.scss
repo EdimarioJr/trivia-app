@@ -1,0 +1,50 @@
+.section {
+  position: relative;
+  display: grid;
+  place-content: center;
+  height: 100vh;
+}
+
+.info-container {
+  display: grid;
+  place-content: center;
+  gap: 5rem;
+  width: 100%;
+  padding: 3rem;
+  border-radius: 10px;
+  backdrop-filter: blur(50px);
+  h1 {
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  a {
+    margin: 0 auto;
+  }
+}
+
+.glowing-ball {
+  position: absolute;
+  animation: pulsate 20s linear infinite;
+  z-index: 0;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+}
+
+@keyframes pulsate {
+  50% {
+    box-shadow: 0 0 20px #fff, 20px 0 80px #f0f, -20px 0 80px #0ff,
+      inset 0 0 50px #fff, inset -50px 0 80px #f0f, inset 50px 0 80px #0ff,
+      inset -50px 0 300px #f0f, inset 50px 0 300px #0ff;
+  }
+}

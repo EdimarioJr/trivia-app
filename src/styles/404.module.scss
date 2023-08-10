@@ -1,0 +1,11 @@
+.page-container {
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 5rem;
+
+  a {
+    align-self: center;
+    text-align: center;
+  }
+}

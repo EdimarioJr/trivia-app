@@ -1,0 +1,27 @@
+@import "../../styles/variables.scss";
+
+.container {
+  width: 600px;
+  height: 400px;
+  padding: 3rem;
+  display: grid;
+  place-content: center;
+  background-color: $danger;
+  border-radius: 10px;
+  gap: 5rem;
+  color: $primary;
+}
+
+.h1 {
+  font-size: 2rem;
+}
+
+.link {
+  background-color: $primary;
+  color: $secondary;
+  text-align: center;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}

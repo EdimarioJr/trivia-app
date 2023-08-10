@@ -1,6 +1,38 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { store } from "@/store";
+import "@/styles/globals.scss";
+import "@/styles/nprogress.scss";
+import type { AppProps } from "next/app";
+
+import { Roboto } from "next/font/google";
+import Head from "next/head";
+import { Provider } from "react-redux";
+import Router from "next/router";
+import NProgress from "nprogress";
+
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
+
+const roboto = Roboto({
+  weight: ["400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+
+  display: "swap",
+});
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <Provider store={store}>
+      <Head>
+        <title>Trivia</title>
+        <meta name="description" content="Trivia app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className={`${roboto.className}`}>
+        <Component {...pageProps} />
+      </main>
+    </Provider>
+  );
 }

@@ -7,6 +7,13 @@ type QuizState = Quiz & {
   quizFinished: boolean;
 };
 
+export type Result = {
+  questionText: string;
+  rightAnswer: string;
+  answer: string;
+  status: "correct" | "incorrect";
+};
+
 const initialState: QuizState = {
   questions: [],
   answers: [],
@@ -25,9 +32,10 @@ export const quizSlice = createSlice({
       state.answers = [...state.answers, action.payload];
     },
     nextQuestion: (state) => {
-      state.actualQuestionIndex++;
-      if (state.actualQuestionIndex >= state.questions.length) {
+      if (state.actualQuestionIndex + 1 >= state.questions.length) {
         state.quizFinished = true;
+      } else {
+        state.actualQuestionIndex++;
       }
     },
     resetQuiz: (state) => {
@@ -54,7 +62,10 @@ export const selectCurrentQuestion = (state: RootState) =>
 export const selectCurrentAlternatives = createSelector(
   [selectCurrentQuestion],
   (question: Question) => {
-    if (question) return [...question.incorrectAnswers, question.correctAnswer];
+    if (question)
+      return [...question.incorrectAnswers, question.correctAnswer].sort(
+        () => 0.5 - Math.random()
+      );
 
     return [];
   }
@@ -68,6 +79,8 @@ export const selectCorrectAlternative = createSelector(
   }
 );
 
+export const selectQuizFinished = (state: RootState) => state.quizFinished;
+
 export const selectTotalQuestions = (state: RootState) =>
   state.questions.length;
 
@@ -80,5 +93,36 @@ export const selectTotalCorrectAnsweredQuestions = (state: RootState) =>
     );
     return question?.correctAnswer === answer.answer ? total + 1 : total;
   }, 0);
+
+export const selectResult = (state: RootState): Result[] => {
+  const questionsObject: Record<Question["id"], Question> =
+    state.questions.reduce((questionObj, question) => {
+      (questionObj as Record<Question["id"], Question>)[question.id] = question;
+
+      return questionObj;
+    }, {});
+
+  return state.answers.map((answer) => {
+    const question = questionsObject[answer.questionId];
+
+    return {
+      questionText: question.question.text,
+      rightAnswer: question.correctAnswer,
+      answer: answer.answer,
+      status:
+        question.correctAnswer === answer.answer ? "correct" : "incorrect",
+    };
+  });
+};
+
+export const selectCorrectAnswers = createSelector(
+  [selectResult],
+  (results: Result[]) => {
+    return results.reduce(
+      (total, result) => (result.status === "correct" ? (total += 1) : total),
+      0
+    );
+  }
+);
 
 export default quizSlice.reducer;

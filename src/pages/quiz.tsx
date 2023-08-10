@@ -33,7 +33,7 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
     currentQuestion,
     incorrectAnswerAudioRef,
     correctAnswerAudioRef,
-    TIME_PER_FRAME,
+    timePerFrame,
     selectedAlternative,
     setSelectedAlternative,
     correctAlternative,
@@ -43,7 +43,7 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
     timeFinished,
     showQuestionResult,
     setTimeFinished,
-    FRACTION_PROGRESS_BAR,
+    fractionProgressBar,
   } = useQuiz({ questions, initialRandomImage });
 
   return currentQuestion ? (
@@ -69,15 +69,15 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
         {timeFinished ? (
           <TimeFinishedCard />
         ) : (
-          <Card style={{ width: "1000px" }}>
+          <Card style={{ width: "1000px", zIndex: 1 }}>
             <h1>{currentQuestion.question.text}</h1>
             <div className={styles["progress-bar-container"]}>
               {!showQuestionResult && (
                 <ProgressBar
                   timeFinished={timeFinished}
                   setTimeFinished={setTimeFinished}
-                  fractionProgressBar={FRACTION_PROGRESS_BAR}
-                  timePerFrame={TIME_PER_FRAME}
+                  fractionProgressBar={fractionProgressBar}
+                  timePerFrame={timePerFrame}
                   currentQuestionId={currentQuestion.id}
                 />
               )}

@@ -5,9 +5,11 @@ import {
   selectCorrectAlternative,
   selectCurrentAlternatives,
   selectCurrentQuestion,
+  selectQuizFinished,
   setAnswer,
   setQuestions,
 } from "@/store/quizSlice";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,6 +29,8 @@ const TIME_SHOW_QUESTION_ANSWER = 2000;
 
 export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const [selectedAlternative, setSelectedAlternative] = useState("");
   const [currentRandomImage, setCurrentRandomImage] =
     useState(initialRandomImage);
@@ -40,6 +44,7 @@ export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
   const currentQuestion = useSelector(selectCurrentQuestion);
   const currentAlternatives = useSelector(selectCurrentAlternatives);
   const correctAlternative = useSelector(selectCorrectAlternative);
+  const quizFinished = useSelector(selectQuizFinished);
 
   const handleConfirmAnswer = () => {
     dispatch(
@@ -80,6 +85,12 @@ export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
     if (currentQuestion?.id) getRandomImage();
   }, [currentQuestion?.id]);
 
+  useEffect(() => {
+    if (quizFinished) {
+      router.push("/resultado");
+    }
+  }, [quizFinished, router]);
+
   return {
     actualQuestionIndex,
     currentAlternatives,
@@ -88,11 +99,11 @@ export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
     handleConfirmAnswer,
     setTimeFinished,
     currentRandomImage,
-    FRACTION_PROGRESS_BAR,
+    fractionProgressBar: FRACTION_PROGRESS_BAR,
     currentQuestion,
     incorrectAnswerAudioRef,
     correctAnswerAudioRef,
-    TIME_PER_FRAME,
+    timePerFrame: TIME_PER_FRAME,
     selectedAlternative,
     setSelectedAlternative,
     correctAlternative,

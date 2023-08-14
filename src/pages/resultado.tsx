@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { Card } from "@/components";
 import { selectCorrectAnswers, selectResult } from "@/store";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import styles from "@/styles/Result.module.scss";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const GOOD_RESULT_MINIMUM = 7;
 
@@ -32,10 +33,15 @@ const getClassByResultStatus = (status: ResultStatus) => {
 const ResultPage = () => {
   const badResultAudioRef = useRef<HTMLAudioElement | null>(null);
   const goodResultAudioRef = useRef<HTMLAudioElement | null>(null);
+  const router = useRouter();
 
   const results = useSelector(selectResult);
   const totalCorrectAnswers = useSelector(selectCorrectAnswers);
   const resultStatus: ResultStatus = getResultStatus(totalCorrectAnswers);
+
+  useEffect(() => {
+    if (!results.length) router.push("/");
+  }, [results, router]);
 
   return (
     <section className={styles["page-container"]}>

@@ -14,6 +14,6 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Is a simple trivia app that is build with Nextjs, SCSS, Jest and Redux. Each trivia has 10 questions, and the results are shown in the end of the trivia.
+It's a simple trivia app built with Next.js, SCSS, Jest, and Redux. Each trivia has 10 questions, and the results are shown at the end of the trivia
 
 ![Home of trivia app](image.png)

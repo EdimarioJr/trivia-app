@@ -111,9 +111,7 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
                     ? styles["show-confirm-button"]
                     : styles["hide-confirm-button"]
                 } `}
-                onClick={() =>
-                  selectedAlternative ? handleConfirmAnswer() : null
-                }
+                onClick={handleConfirmAnswer}
               >
                 Confirm
               </button>

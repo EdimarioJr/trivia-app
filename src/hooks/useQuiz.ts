@@ -41,28 +41,30 @@ export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
   const quizFinished = useSelector(selectQuizFinished);
 
   const handleConfirmAnswer = () => {
-    dispatch(
-      setAnswer({
-        id: selectedAlternative,
-        answer: selectedAlternative,
-        questionId: currentQuestion.id,
-      })
-    );
+    if (selectedAlternative && !showQuestionResult) {
+      dispatch(
+        setAnswer({
+          id: selectedAlternative,
+          answer: selectedAlternative,
+          questionId: currentQuestion.id,
+        })
+      );
 
-    const answerIsCorrect = correctAlternative === selectedAlternative;
+      const answerIsCorrect = correctAlternative === selectedAlternative;
 
-    if (correctAnswerAudioRef.current && answerIsCorrect) {
-      correctAnswerAudioRef.current.play();
-    } else if (incorrectAnswerAudioRef.current)
-      incorrectAnswerAudioRef.current.play();
+      if (correctAnswerAudioRef.current && answerIsCorrect) {
+        correctAnswerAudioRef.current.play();
+      } else if (incorrectAnswerAudioRef.current)
+        incorrectAnswerAudioRef.current.play();
 
-    setShowQuestionResult(true);
+      setShowQuestionResult(true);
 
-    setTimeout(() => {
-      setShowQuestionResult(false);
-      dispatch(nextQuestion());
-      setSelectedAlternative("");
-    }, TIME_SHOW_QUESTION_ANSWER);
+      setTimeout(() => {
+        setShowQuestionResult(false);
+        dispatch(nextQuestion());
+        setSelectedAlternative("");
+      }, TIME_SHOW_QUESTION_ANSWER);
+    }
   };
 
   useEffect(() => {

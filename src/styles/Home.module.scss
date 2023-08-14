@@ -15,14 +15,15 @@
   padding: 3rem;
   border-radius: 10px;
   backdrop-filter: blur(50px);
+
   h1 {
-    font-size: 4rem;
+    font-size: $font-xxl;
     text-align: center;
     color: $secondary;
   }
 
   h2 {
-    font-size: 1.8rem;
+    font-size: $font-lg;
     font-weight: 400;
     text-align: center;
     color: $secondary;
@@ -50,5 +51,18 @@
     box-shadow: 0 0 20px #fff, 20px 0 80px #f0f, -20px 0 80px #0ff,
       inset 0 0 50px #fff, inset -50px 0 80px #f0f, inset 50px 0 80px #0ff,
       inset -50px 0 300px #f0f, inset 50px 0 300px #0ff;
+  }
+}
+
+@media (max-width: $md) {
+  .info-container {
+    padding: 2rem 0.5rem;
+    h1 {
+      font-size: $font-xl;
+    }
+
+    h2 {
+      font-size: $font-md;
+    }
   }
 }

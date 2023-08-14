@@ -13,7 +13,7 @@
 }
 
 .h1 {
-  font-size: 2rem;
+  font-size: $font-lg;
 }
 
 .link {
@@ -24,4 +24,17 @@
   padding: 1rem 2rem;
   border-radius: 5px;
   cursor: pointer;
+}
+
+@media (max-width: $md) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media (max-width: $sm) {
+  .container {
+    max-width: 90%;
+    justify-self: center;
+  }
 }

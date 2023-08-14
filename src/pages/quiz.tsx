@@ -66,14 +66,13 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
         {timeFinished ? (
           <TimeFinishedCard />
         ) : (
-          <Card style={{ width: "1000px", zIndex: 1 }}>
+          <Card className={styles["question-card"]}>
             <h1>{currentQuestion.question.text}</h1>
             <div className={styles["progress-bar-container"]}>
               {!showQuestionResult && (
                 <ProgressBar
                   timeFinished={timeFinished}
                   setTimeFinished={setTimeFinished}
-                  durationInMs={30000}
                   currentQuestionId={currentQuestion.id}
                 />
               )}

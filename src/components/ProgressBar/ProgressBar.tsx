@@ -7,7 +7,7 @@ export type ProgressBarProps = {
   timeFinished: boolean;
   setTimeFinished: Dispatch<SetStateAction<boolean>>;
   currentQuestionId: string;
-  durationInMs: number;
+  durationInMs?: number;
 };
 
 export const ProgressBar = ({

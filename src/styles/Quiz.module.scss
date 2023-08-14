@@ -50,6 +50,11 @@
   }
 }
 
+.question-card {
+  width: 1000px;
+  z-index: 1;
+}
+
 .alternatives-column {
   display: flex;
   flex-direction: column;
@@ -115,4 +120,25 @@
   height: 100vh;
   gap: 3rem;
   text-align: center;
+}
+
+@media (max-width: $xxl) {
+  .page-container {
+    grid-template-columns: 1fr;
+    place-content: center;
+  }
+
+  .image-section {
+    display: none;
+  }
+}
+
+@media (max-width: $xl) {
+  .question-card {
+    h1 {
+      font-size: $font-lg;
+    }
+    width: 90%;
+    justify-self: center;
+  }
 }

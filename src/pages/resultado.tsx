@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Card } from "@/components";
 import { selectCorrectAnswers, selectResult } from "@/store";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import styles from "@/styles/Result.module.scss";
 import Link from "next/link";

@@ -94,26 +94,32 @@ export const selectTotalCorrectAnsweredQuestions = (state: RootState) =>
     return question?.correctAnswer === answer.answer ? total + 1 : total;
   }, 0);
 
-export const selectResult = (state: RootState): Result[] => {
-  const questionsObject: Record<Question["id"], Question> =
-    state.questions.reduce((questionObj, question) => {
-      (questionObj as Record<Question["id"], Question>)[question.id] = question;
+export const selectResult = createSelector(
+  [selectAnswers, selectQuestions],
+  (answers, questions): Result[] => {
+    const questionsObject: Record<Question["id"], Question> = questions.reduce(
+      (questionObj, question) => {
+        (questionObj as Record<Question["id"], Question>)[question.id] =
+          question;
 
-      return questionObj;
-    }, {});
+        return questionObj;
+      },
+      {}
+    );
 
-  return state.answers.map((answer) => {
-    const question = questionsObject[answer.questionId];
-
-    return {
-      questionText: question.question.text,
-      rightAnswer: question.correctAnswer,
-      answer: answer.answer,
-      status:
-        question.correctAnswer === answer.answer ? "correct" : "incorrect",
-    };
-  });
-};
+    return answers.map((answer) => {
+      const question = questionsObject[answer.questionId];
+      0;
+      return {
+        questionText: question.question.text,
+        rightAnswer: question.correctAnswer,
+        answer: answer.answer,
+        status:
+          question.correctAnswer === answer.answer ? "correct" : "incorrect",
+      };
+    });
+  }
+);
 
 export const selectCorrectAnswers = createSelector(
   [selectResult],

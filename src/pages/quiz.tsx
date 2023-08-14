@@ -1,16 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Question } from "@/models";
-import {
-  nextQuestion,
-  selectActualQuestionIndex,
-  selectCorrectAlternative,
-  selectCurrentAlternatives,
-  selectCurrentQuestion,
-  setAnswer,
-  setQuestions,
-} from "@/store/quizSlice";
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import styles from "@/styles/Quiz.module.scss";
 import {
@@ -21,10 +11,11 @@ import {
 } from "@/components";
 import { useQuiz } from "@/hooks";
 import Link from "next/link";
+import Image, { StaticImageData } from "next/image";
 
 export type QuizPageProps = {
   questions: Question[];
-  initialRandomImage: string;
+  initialRandomImage: string | StaticImageData;
 };
 
 const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
@@ -33,7 +24,6 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
     currentQuestion,
     incorrectAnswerAudioRef,
     correctAnswerAudioRef,
-    timePerFrame,
     selectedAlternative,
     setSelectedAlternative,
     correctAlternative,
@@ -43,7 +33,6 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
     timeFinished,
     showQuestionResult,
     setTimeFinished,
-    fractionProgressBar,
   } = useQuiz({ questions, initialRandomImage });
 
   return currentQuestion ? (
@@ -55,8 +44,16 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
         <source src="/success-sound.wav" type="audio/wav" />
       </audio>
       <div className={styles["image-section"]}>
-        <img src={currentRandomImage} alt="random image" />
-        <img
+        <Image
+          src={currentRandomImage}
+          alt="random image"
+          fill
+          unoptimized
+          data-testid="quiz-image"
+        />
+        <Image
+          unoptimized
+          fill
           src={currentRandomImage}
           alt="random image blurred"
           className={styles["blurred-image"]}
@@ -76,8 +73,7 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
                 <ProgressBar
                   timeFinished={timeFinished}
                   setTimeFinished={setTimeFinished}
-                  fractionProgressBar={fractionProgressBar}
-                  timePerFrame={timePerFrame}
+                  durationInMs={30000}
                   currentQuestionId={currentQuestion.id}
                 />
               )}
@@ -87,6 +83,7 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
                 {currentAlternatives.map((alternative) => {
                   return (
                     <button
+                      data-testid="alternative"
                       className={`${styles.alternative} ${
                         alternative === selectedAlternative &&
                         styles["alternative-selected"]
@@ -109,6 +106,7 @@ const QuizPage = ({ questions, initialRandomImage }: QuizPageProps) => {
 
             <div className={`${styles["confirm-row"]}`}>
               <button
+                data-testid="confirm-button"
                 className={`${styles["confirm-button"]} ${
                   selectedAlternative
                     ? styles["show-confirm-button"]
@@ -140,7 +138,7 @@ export async function getServerSideProps() {
   try {
     const [resQuestions, resRandomImage] = await Promise.all([
       fetch(`https://the-trivia-api.com/v2/questions`),
-      fetch("https://picsum.photos/300/600"),
+      fetch("https://picsum.photos/800/1200"),
     ]);
 
     const questions = await resQuestions.json();

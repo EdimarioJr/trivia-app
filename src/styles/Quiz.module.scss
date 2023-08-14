@@ -44,6 +44,10 @@
   place-content: center;
   gap: 3rem;
   padding: 0;
+
+  h4 {
+    color: $secondary;
+  }
 }
 
 .alternatives-column {
@@ -62,6 +66,8 @@
   font-size: 1.2rem;
   cursor: pointer;
   border: none;
+  background-color: white;
+  color: $primary;
 }
 
 .alternative-selected {

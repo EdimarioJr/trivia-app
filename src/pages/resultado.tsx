@@ -39,12 +39,6 @@ const ResultPage = () => {
 
   return (
     <section className={styles["page-container"]}>
-      <audio ref={badResultAudioRef} autoPlay={resultStatus === "bad"}>
-        <source src="/sadtrombone.mp3" type="audio/mp3" />
-      </audio>
-      <audio ref={goodResultAudioRef} autoPlay={resultStatus === "good"}>
-        <source src="/applause.wav" type="audio/wav" />
-      </audio>
       <h1 className={getClassByResultStatus(resultStatus)}>
         You got {totalCorrectAnswers} out of {results.length}!
       </h1>
@@ -95,6 +89,14 @@ const ResultPage = () => {
           </button>
         </Link>
       </div>
+      <>
+        <audio ref={badResultAudioRef} autoPlay={resultStatus === "bad"}>
+          <source src="/sadtrombone.mp3" type="audio/mp3" />
+        </audio>
+        <audio ref={goodResultAudioRef} autoPlay={resultStatus === "good"}>
+          <source src="/applause.wav" type="audio/wav" />
+        </audio>
+      </>
     </section>
   );
 };

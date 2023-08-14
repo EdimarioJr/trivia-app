@@ -9,23 +9,17 @@ import {
   setAnswer,
   setQuestions,
 } from "@/store/quizSlice";
+import { StaticImageData } from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export type UseQuizProps = {
   questions: Question[];
-  initialRandomImage: string;
+  initialRandomImage: string | StaticImageData;
 };
 
-const TIME_PER_FRAME = 10; // ms
-const TIME_PER_QUESTION = 1000 * 30; // 30 segundos
-
-const NUMBER_OF_EXECUTIONS = TIME_PER_QUESTION / TIME_PER_FRAME;
-
-const FRACTION_PROGRESS_BAR = 100 / NUMBER_OF_EXECUTIONS;
-
-const TIME_SHOW_QUESTION_ANSWER = 2000;
+export const TIME_SHOW_QUESTION_ANSWER = 2000;
 
 export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
   const dispatch = useDispatch();
@@ -77,13 +71,13 @@ export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
 
   useEffect(() => {
     const getRandomImage = async () => {
-      const response = await fetch("https://picsum.photos/400/800");
+      const response = await fetch("https://picsum.photos/800/1200");
 
       setCurrentRandomImage(response.url);
     };
 
-    if (currentQuestion?.id) getRandomImage();
-  }, [currentQuestion?.id]);
+    if (currentQuestion?.id && actualQuestionIndex >= 1) getRandomImage();
+  }, [currentQuestion?.id, actualQuestionIndex]);
 
   useEffect(() => {
     if (quizFinished) {
@@ -99,11 +93,9 @@ export const useQuiz = ({ questions, initialRandomImage }: UseQuizProps) => {
     handleConfirmAnswer,
     setTimeFinished,
     currentRandomImage,
-    fractionProgressBar: FRACTION_PROGRESS_BAR,
     currentQuestion,
     incorrectAnswerAudioRef,
     correctAnswerAudioRef,
-    timePerFrame: TIME_PER_FRAME,
     selectedAlternative,
     setSelectedAlternative,
     correctAlternative,

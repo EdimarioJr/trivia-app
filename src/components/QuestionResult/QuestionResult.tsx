@@ -31,14 +31,15 @@ export const QuestionResult = ({
               styles["alternative-answer-wrong"]
             }
             ${
-              isSelectedAlternativeAndCorrect(alternative) &&
-              styles["alternative-answer-correct"]
+              isSelectedAlternativeAndCorrect(alternative)
+                ? styles["alternative-answer-correct"]
+                : ""
             } 
             ${
-              isDifferentAlternativeAndCorrect(alternative) &&
-              styles["alternative-correct"]
+              isDifferentAlternativeAndCorrect(alternative)
+                ? styles["alternative-correct"]
+                : ""
             }
-            
             `}
             key={alternative}
           >
